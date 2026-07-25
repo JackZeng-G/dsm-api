@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 
@@ -15,22 +16,47 @@ func main() {
 	)
 	fmt.Println("=== DSM API 文件操作示例 ===")
 
-	api.Login("FileStation")
+	if _, err := api.Login("FileStation"); err != nil {
+		fmt.Printf("登录失败: %v\n", err)
+		return
+	}
+	defer api.Logout()
 
 	fmt.Println("\n--- 共享文件夹列表 ---")
-	body, _ := api.FSListShares()
-	fmt.Println(body)
+	body, err := api.FSListShares()
+	if err != nil {
+		fmt.Printf("查询失败: %v\n", err)
+		return
+	}
+	printJSON(body)
 
 	fmt.Println("\n--- 创建测试文件夹 ---")
-	body, _ = api.FSCreateFolder("/data", "dsm_test_golang")
-	fmt.Println(body)
+	body, err = api.FSCreateFolder("/data", "dsm_test_golang")
+	if err != nil {
+		fmt.Printf("创建失败: %v\n", err)
+		return
+	}
+	printJSON(body)
 
 	fmt.Println("\n--- /data 目录内容 ---")
-	body, _ = api.FSList("/data", "")
-	fmt.Println(body)
+	body, err = api.FSList("/data", "")
+	if err != nil {
+		fmt.Printf("查询失败: %v\n", err)
+		return
+	}
+	printJSON(body)
 
-	api.Logout()
 	fmt.Println("\n=== 文件操作完成 ===")
+}
+
+// printJSON 以缩进 JSON 打印 map 响应
+func printJSON(v interface{}) {
+	b, err := json.MarshalIndent(v, "", "  ")
+	if err != nil {
+		fmt.Printf("%v\n", v)
+		return
+	}
+	fmt.Println(string(b))
 }
 
 func getenv(key, def string) string {

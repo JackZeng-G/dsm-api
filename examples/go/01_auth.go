@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 
@@ -23,13 +24,13 @@ func main() {
 		fmt.Printf("错误: %v\n", err)
 		return
 	}
-	fmt.Println(body)
+	printJSON(body)
 
 	// 2. 登录
 	fmt.Println("\n--- 2. 登录 ---")
 	body, err = api.Login("FileStation")
 	if err != nil {
-		fmt.Printf("错误: %v\n", err)
+		fmt.Printf("登录失败: %v\n", err)
 		return
 	}
 	fmt.Printf("SID: %.20s...\n", api.Sid)
@@ -38,12 +39,22 @@ func main() {
 	fmt.Println("\n--- 3. 登出 ---")
 	body, err = api.Logout()
 	if err != nil {
-		fmt.Printf("错误: %v\n", err)
+		fmt.Printf("登出失败: %v\n", err)
 		return
 	}
-	fmt.Println(body)
+	printJSON(body)
 
 	fmt.Println("\n=== 认证流程完成 ===")
+}
+
+// printJSON 以缩进 JSON 打印 map 响应
+func printJSON(v interface{}) {
+	b, err := json.MarshalIndent(v, "", "  ")
+	if err != nil {
+		fmt.Printf("%v\n", v)
+		return
+	}
+	fmt.Println(string(b))
 }
 
 func getenv(key, def string) string {
