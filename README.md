@@ -6,7 +6,13 @@
 
 ## 中文
 
-群晖 DSM 7.x REST API 多语言调用示例。覆盖认证、文件操作、用户管理、Docker 管理等常用 API。
+群晖 DSM 7.x REST API 多语言调用示例 + 完整参考手册。覆盖认证、文件操作、用户管理、Docker 管理等常用 API。
+
+📖 **完整 API 参考**：[DSM_API_参考手册.md](DSM_API_参考手册.md) —— 16 章速查手册：
+
+- 一-六章 + 十二-十三章 + 十五章：curl/Go/SSH 实测**验证主体**（认证/文件/Docker/权限/用户/SSH/Web 跳转/脚本）
+- 七-十一章：`synology-api` 封装库源码**反推**（系统存储/系统服务安全/媒体协作/备份虚拟化/目录服务，遇冲突以验证为准）
+- 十四章：Python 封装库 `synology-api` 用法
 
 ### 前置条件
 
@@ -37,6 +43,7 @@ dsm-api/
 │   ├── go/
 │   ├── nodejs/
 │   └── java/
+├── DSM_API_参考手册.md  # 完整 API 参考手册（16 章）
 ├── LICENSE           # MIT
 └── README.md
 ```
@@ -97,7 +104,13 @@ MIT License. See [LICENSE](LICENSE).
 
 ## English
 
-Multi-language example scripts for Synology DSM 7.x REST API. Covers authentication, file operations, user management, Docker management, and more.
+Multi-language example scripts + complete reference manual for Synology DSM 7.x REST API. Covers authentication, file operations, user management, Docker management, and more.
+
+📖 **Full API reference**: [DSM_API_参考手册.md](DSM_API_参考手册.md) — 16-chapter manual:
+
+- Ch.1-6, 12-13, 15: verified curl/Go/SSH **core** (auth/file/Docker/share/user/SSH/web-nav/scripts)
+- Ch.7-11: reverse-engineered from `synology-api` library (system/media/backup/directory APIs; defer to verified core on conflict)
+- Ch.14: Python `synology-api` wrapper usage
 
 ### Prerequisites
 
