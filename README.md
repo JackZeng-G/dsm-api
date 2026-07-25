@@ -53,16 +53,19 @@ dsm-api/
 | API | 方法 | 说明 |
 |-----|------|------|
 | SYNO.API.Info | query | API 发现 / 连通性测试 |
-| SYNO.API.Auth | login / logout | 登录 / 登出 |
+| SYNO.API.Auth | login / logout | 登录 / 登出（自动携带 X-SYNO-TOKEN） |
 | SYNO.FileStation.Info | get | 用户信息 |
 | SYNO.FileStation.List | list / list_share | 列出目录 / 共享文件夹 |
 | SYNO.FileStation.CreateFolder | create | 创建文件夹 |
 | SYNO.FileStation.CopyMove | start / status | 复制 / 移动（异步） |
 | SYNO.FileStation.Rename | rename | 重命名 |
-| SYNO.Docker.Project | list / create | Docker 项目管理 |
-| SYNO.Docker.Container | stop | 停止容器 |
-| SYNO.Core.Share.Permission | list / set | 共享权限 |
-| SYNO.Core.User | list | 用户列表 |
+| SYNO.Docker.Project | list / get / stop / delete / create / build | Docker 项目生命周期（手册 4.1 清理重建） |
+| SYNO.Docker.Container | stop | 停止容器（兜底） |
+| SYNO.Core.Share.Permission | list | 共享权限查询（示例 04） |
+| SYNO.Core.User | list | 用户列表（示例 04） |
+| SYNO.Core.System.Utilization | get | CPU/内存/磁盘利用率（示例 05） |
+| SYNO.Core.Storage.Disk | list | 磁盘列表（示例 05） |
+| SYNO.Storage.CGI.Smart | get_health_info | SMART 健康（示例 05） |
 
 ### 各语言运行方式
 
@@ -95,6 +98,8 @@ NAS_IP=192.168.1.10 NAS_USER=admin NAS_PASS=password node ../examples/nodejs/01_
 ```bash
 javac examples/java/01_auth.java -d out && java -cp out DsmApiAuth
 ```
+
+> 示例文件：`01_auth` / `02_file` / `03_docker` / `04_user_share` / `05_system`，替换文件名即可运行其他示例。`04`（用户/权限）、`05`（系统/存储）为**只读查询**，安全可直接跑；`03_docker` 的清理重建流程为破坏性，默认注释不执行。
 
 ### 许可
 
@@ -134,6 +139,8 @@ Multi-language example scripts + complete reference manual for Synology DSM 7.x 
 | Go | net/http | `scripts/go/dsm_api.go` |
 | Node.js | fetch (built-in) | `scripts/nodejs/dsm_api.js` |
 | Java | HttpURLConnection | `scripts/java/DsmApi.java` |
+
+> Examples: `01_auth` / `02_file` / `03_docker` / `04_user_share` / `05_system`. `04` (user/share) & `05` (system/storage) are **read-only** and safe to run; `03_docker` cleanup flow is destructive (commented out by default).
 
 ### License
 
